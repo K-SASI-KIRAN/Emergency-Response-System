@@ -1,6 +1,8 @@
 # 🚨 Emergency Response System
 
 The **Emergency Response System** is a web-based application designed to enable users to quickly and efficiently request emergency assistance. It provides a responsive user interface, real-time location tracking, and backend integration to assist emergency services in responding faster.
+[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://K-SASI-KIRAN.github.io/Emergency-Response-System/)
+
 
 ---
 
