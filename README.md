@@ -1,25 +1,32 @@
 # 🚨 Emergency Response System
 
-The **Emergency Response System** is a web-based application designed to enable users to quickly and efficiently request emergency assistance. It provides a responsive user interface, real-time location tracking, and backend integration to assist emergency services in responding faster.
 [![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://K-SASI-KIRAN.github.io/Emergency-Response-System/)
 
+A full-stack web application to report, track, and resolve emergencies efficiently using a centralized emergency dashboard.
 
 ---
 
-## 🔧 Technologies Used
+## 🧱 Features
 
-- **Frontend**: HTML5, CSS3, JavaScript  
-- **Backend**: (Integrated by team – placeholder for APIs or server logic)  
-- **Other Tools**: Git, GitHub, Visual Studio Code
+- 📢 Emergency report form with name, type, priority, and location
+- 📊 Live statistics for active, resolved, and pending emergencies
+- ⏰ Real-time local time display
+- 🧭 Priority filtering: View High/Medium/Low priority cases
+- ☎️ Click-to-call emergency contacts (police, ambulance, fire)
+- 📋 List of current emergencies and resolved emergencies
+- 🌗 Theme toggle (dark/light)
+
+---
+
+## 🖥️ Tech Stack
+
+| Layer       | Technologies Used                        |
+|-------------|-------------------------------------------|
+| Frontend    | HTML, CSS, Bootstrap 5, JavaScript        |
+| Backend     | Node.js, Express.js                       |
+| Database    | MongoDB (local or Atlas)                  |
 
 ---
 
-## 🌟 Features
-
-- 🔘 Simple and intuitive interface for users to raise emergency alerts  
-- 📍 Real-time location tracking of the user during an emergency  
-- 🧭 Responsive design compatible with mobile and desktop devices  
-- 🔗 Integrated with backend APIs for sending emergency data to responders
-
----
+## 📁 Project Structure
 
