@@ -1,0 +1,280 @@
+
+:root {
+    
+    --primary-color: #2c3e50;      /* Dark blue-gray */
+    --secondary-color: #95a5a6;    /* Light gray */
+    --success-color: #27ae60;      /* Muted green */
+    --warning-color: #f39c12;      /* Muted orange */
+    --info-color: #3498db;         /* Muted blue */
+    --danger-color: #c0392b;       /* Muted red */
+    --light-bg: #f5f6fa;           /* Light background */
+    --dark-bg: #1a1a1a;           /* Dark background */
+    --dark-card: #2d2d2d;         /* Dark card background */
+    --dark-text: #ecf0f1;         /* Light text for dark mode */
+    --card-border: #dcdde1;       /* Border color */
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    transition: background-color 0.3s, color 0.3s;
+    background-color: var(--light-bg);
+}
+
+
+body.dark {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+}
+
+body.dark .card {
+    background-color: var(--dark-card);
+    border-color: #3d3d3d;
+}
+
+body.dark .list-group-item {
+    background-color: var(--dark-card);
+    border-color: #3d3d3d;
+    color: var(--dark-text);
+}
+
+.navbar.bg-danger {
+    background-color: var(--primary-color) !important;
+}
+
+/* Contact Cards */
+.contact-card {
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem !important;
+    background-color: white;
+}
+
+body.dark .contact-card {
+    background-color: var(--dark-card);
+    border-color: #3d3d3d;
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.contact-card .icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.contact-card h5 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.contact-card .btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.contact-card .btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Stats Cards */
+.card {
+    transition: transform 0.3s;
+    border-color: var(--card-border);
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+
+.bg-primary {
+    background-color: var(--primary-color) !important;
+}
+
+.bg-success {
+    background-color: var(--success-color) !important;
+}
+
+.bg-warning {
+    background-color: var(--warning-color) !important;
+}
+
+.bg-info {
+    background-color: var(--info-color) !important;
+}
+
+.bg-danger {
+    background-color: var(--danger-color) !important;
+}
+
+/* Emergency List Items */
+.emergency-item {
+    transition: transform 0.3s;
+    border-color: var(--card-border);
+}
+
+.emergency-item:hover {
+    transform: translateX(5px);
+}
+
+/* Priority Badges */
+.priority-high {
+    background-color: var(--danger-color);
+}
+
+.priority-medium {
+    background-color: var(--warning-color);
+}
+
+.priority-low {
+    background-color: var(--info-color);
+}
+
+/* Form Controls */
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.25);
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    border-color: var(--danger-color);
+}
+
+.btn-danger:hover {
+    background-color: #a93226;
+    border-color: #a93226;
+}
+
+/* Theme Toggle Button */
+#themeToggle {
+    position: relative;
+    padding-left: 2.5rem;
+}
+
+.moon-icon,
+.sun-icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Footer */
+footer {
+    margin-top: auto;
+    padding: 1rem 0;
+    background-color: var(--primary-color);
+    color: var(--dark-text);
+    text-align: center;
+}
+
+/* Clock */
+#clock {
+    font-family: monospace;
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--light-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #34495e;
+}
+
+/* Notification Styles */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    animation: slideIn 0.3s ease-out;
+}
+
+/* Card Header Styles */
+.card-header {
+    border-bottom: 1px solid var(--card-border);
+}
+
+.card-header.bg-danger {
+    background-color: var(--primary-color) !important;
+}
+
+/* Button Group Styles */
+.btn-group .btn-light {
+    background-color: transparent;
+    border-color: var(--card-border);
+    color: var(--primary-color);
+}
+
+.btn-group .btn-light:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+body.dark .btn-group .btn-light {
+    color: var(--dark-text);
+    border-color: #3d3d3d;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .contact-card {
+        margin-bottom: 1rem;
+    }
+    
+    .btn-group {
+        flex-direction: column;
+    }
+    
+    .btn-group .btn {
+        margin: 0.2rem 0;
+    }
+}
