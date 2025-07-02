@@ -1,14 +1,11 @@
-
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
-
 dotenv.config();
 
 const app = express();
-
 
 app.use(cors());
 app.use(express.json());
@@ -16,8 +13,9 @@ app.use(express.json());
 // MongoDB Connection
 const connectDB = async () => {
     try {
-        mongoose.set('debug', true);
-        await mongoose.connect("mongodb://localhost:27017/emergencyDB", {
+        // Set debug to false in production for cleaner logs
+        mongoose.set('debug', process.env.NODE_ENV !== 'production');
+        await mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/emergencyDB", {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
@@ -31,54 +29,46 @@ const connectDB = async () => {
 connectDB();
 
 const emergencySchema = new mongoose.Schema({
-    reporter: String,
-    type: String,
-    description: String,
-    priority: String,
-    location: String,
+    reporter: { type: String, required: true },
+    type: { type: String, required: true },
+    description: { type: String, required: true },
+    priority: { type: String, required: true },
+    location: { type: String, required: true },
     status: {
         type: String,
-        default: 'pending'
+        default: 'pending', // Can be 'pending' or 'resolved'
+        enum: ['pending', 'resolved']
     },
-    timestamp: {
-        type: Date,
-        default: Date.now
-    }
-}, { timestamps: true });
+}, { timestamps: true }); // Automatically adds createdAt and updatedAt
 
 const Emergency = mongoose.model('Emergency', emergencySchema);
 
+// CREATE a new emergency
 app.post('/api/emergencies', async (req, res) => {
     try {
-        console.log('📥 Received emergency data:', req.body);
         const emergency = await Emergency.create(req.body);
-        res.status(201).json({
-            message: 'Emergency created successfully',
-            data: emergency
-        });
+        res.status(201).json(emergency);
     } catch (error) {
-        res.status(500).json({
-            message: 'Failed to create emergency',
+        res.status(400).json({
+            message: 'Failed to create emergency. Please check input data.',
             error: error.message
         });
     }
 });
 
+// READ all pending emergencies and recently resolved ones
 app.get('/api/emergencies', async (req, res) => {
     try {
-        console.log('📤 Fetching emergencies...');
-        
-        
-        
-       
+        // Get all pending and all resolved emergencies from the last 24 hours
+        const startOfDay = new Date();
+        startOfDay.setDate(startOfDay.getDate() - 1); // Go back 24 hours
 
         const emergencies = await Emergency.find({
             $or: [
                 { status: 'pending' },
-                { status: 'resolved', timestamp: { $gte: startOfDay } }
+                { status: 'resolved', updatedAt: { $gte: startOfDay } }
             ]
-        }).sort('-createdAt');
-        
+        }).sort({ createdAt: -1 }); // Show newest first
 
         res.json(emergencies);
     } catch (error) {
@@ -89,13 +79,13 @@ app.get('/api/emergencies', async (req, res) => {
     }
 });
 
-
+// UPDATE an emergency to 'resolved'
 app.patch('/api/emergencies/:id', async (req, res) => {
     try {
         const emergency = await Emergency.findByIdAndUpdate(
             req.params.id,
-            { status: 'resolved' },
-            { new: true }
+            { status: 'resolved' }, // Only update the status
+            { new: true } // Return the updated document
         );
 
         if (!emergency) {
@@ -111,19 +101,34 @@ app.patch('/api/emergencies/:id', async (req, res) => {
     }
 });
 
+// GET statistics
 app.get('/api/stats', async (req, res) => {
     try {
         const stats = await Emergency.aggregate([
             {
                 $group: {
-                    _id: null,
-                    active: { $sum: { $cond: [{ $eq: ['$status', 'pending'] }, 1, 0] } },
-                    resolved: { $sum: { $cond: [{ $eq: ['$status', 'resolved'] }, 1, 0] } },
-                    pending: { $sum: { $cond: [{ $eq: ['$status', 'pending'] }, 1, 0] } }
+                    _id: '$status',
+                    count: { $sum: 1 }
                 }
             }
         ]);
-        res.json(stats[0] || { active: 0, resolved: 0, pending: 0 });
+
+        const formattedStats = {
+            active: 0,
+            resolved: 0,
+            pending: 0,
+        };
+
+        stats.forEach(stat => {
+            if (stat._id === 'pending') {
+                formattedStats.active = stat.count;
+                formattedStats.pending = stat.count;
+            } else if (stat._id === 'resolved') {
+                formattedStats.resolved = stat.count;
+            }
+        });
+        
+        res.json(formattedStats);
     } catch (error) {
         res.status(500).json({
             message: 'Failed to calculate statistics',
